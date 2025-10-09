@@ -1,0 +1,5 @@
+# Ignore Shopify system files that cannot be deleted remotely
+config/settings_data.json
+config/settings_schema.json
+layout/theme.liquid
+templates/gift_card.liquid

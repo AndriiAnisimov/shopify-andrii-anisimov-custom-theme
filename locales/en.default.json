@@ -1,0 +1,33 @@
+{
+  "header": {
+    "products": "✨ Products",
+    "search": "🔍 Search",
+    "cart": "🛒 Cart"
+  },
+  "footer": {
+    "login": "🔑 Log in",
+    "search": "Search site",
+    "copyright": "All rights reserved"
+  },
+  "a11y": {
+    "open_cart": "Open shopping cart",
+    "footer_nav": "Footer navigation menu"
+  },
+  "teaser": {
+    "title": "🌟 Featured products",
+    "empty": "No items here yet — check back soon!"
+  },
+  "navigation": {
+    "home": "🏠 Home",
+    "shop": "🛍️ Shop",
+    "contact": "📞 Contact"
+  },
+  "buttons": {
+    "buy_now": "🛍️ Buy now",
+    "view_all": "View all products"
+  },
+  "messages": {
+    "loading": "Loading magic...",
+    "error": "Oops! Something went wrong."
+  }
+}

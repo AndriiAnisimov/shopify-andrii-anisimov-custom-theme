@@ -1,0 +1,7 @@
+<div class="card-product">
+  <a href="{{ product.url }}">
+    {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title, loading: 'lazy' }}
+    <h3>{{ product.title }}</h3>
+  </a>
+  <p>{{ product.price | money }}</p>
+</div>
