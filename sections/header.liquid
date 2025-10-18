@@ -7,7 +7,7 @@
       <a href="{{ routes.cart_url }}" class="cart-link" aria-label="{{ 'a11y.open_cart' | t }}">
         {{ 'header.cart' | t }}
         <span id="cart-icon-bubble" class="cart-bubble">
-          {{ cart.item_count }}
+          {% render 'mini-cart-count' %}
         </span>
       </a>
   </div>

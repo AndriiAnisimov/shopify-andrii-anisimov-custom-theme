@@ -152,13 +152,27 @@
         });
 
         // Update mini cart
-        fetch("?section_id=cart-icon-bubble")
-            .then(res => res.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newCart = doc.querySelector("#cart-icon-bubble");
-                document.querySelector("#cart-icon-bubble").replaceWith(newCart);
-            });
+        section.addEventListener("click", (e) => {
+            if (!e.target.classList.contains("add-to-cart-btn")) return;
+
+            const productId = e.target.dataset.productId;
+            fetch("/cart/add.js", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ items: [{ id: productId, quantity: 1 }] })
+            })
+                .then(res => res.json())
+                .then(() => {
+                    // Fetch updated mini-cart
+                    fetch("?section_id=cart-icon-bubble")
+                        .then(res => res.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const newCart = doc.querySelector("#cart-icon-bubble");
+                            document.querySelector("#cart-icon-bubble").replaceWith(newCart);
+                        });
+                });
+        });
     });
 </script>

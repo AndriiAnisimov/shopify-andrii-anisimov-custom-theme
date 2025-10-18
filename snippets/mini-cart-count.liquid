@@ -1,0 +1,9 @@
+{% comment %}
+  Returns number of items in the cart
+{% endcomment %}
+
+{%- if cart.item_count > 0 -%}
+    {{ cart.item_count }}
+{%- else -%}
+    0
+{%- endif -%}
