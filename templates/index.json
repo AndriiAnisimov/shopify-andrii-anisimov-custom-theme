@@ -1,8 +1,16 @@
 {
   "sections": {
-    "collection-teaser": {
-      "type": "collection-teaser"
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Featured products",
+        "collection": "",
+        "products_count": 4,
+        "show_price": true,
+        "show_rating": true,
+        "show_add_to_cart": true
+      }
     }
   },
-  "order": ["collection-teaser"]
+  "order": ["featured-products"]
 }

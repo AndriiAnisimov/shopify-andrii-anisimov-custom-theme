@@ -33,20 +33,6 @@ main h1 {
     color: #333;
 }
 
-/* ====== Footer ====== */
-.footer {
-    background: #111;
-    color: #ccc;
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-}
-
-/* ====== Debug Borders (to see blocks clearly) ====== */
-header, footer, main, section {
-    border: 1px dashed #ccc;
-}
-
 /* ====== Featured Products Section ====== */
 .featured-products-section {
     padding: 40px 0;
@@ -85,4 +71,13 @@ header, footer, main, section {
 .sort-controls {
     text-align: right;
     margin-bottom: 20px;
+}
+
+/* ====== Footer ====== */
+.footer {
+    background: #111;
+    color: #ccc;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
 }
