@@ -16,19 +16,44 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+
 .header a {
     color: white;
     text-decoration: none;
     margin: 0 1rem;
 }
+
 .header a:hover {
     text-decoration: underline;
+}
+
+.cart-link {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.cart-bubble {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: red;
+    color: white;
+    font-size: 0.75rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ====== Main ====== */
 main {
     padding: 2rem;
 }
+
 main h1 {
     color: #333;
 }

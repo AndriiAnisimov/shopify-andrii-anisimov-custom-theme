@@ -2,8 +2,13 @@
   <div class="container">
     {% render 'logo' %}
     {% render 'nav-main' %}
-    <a href="{{ routes.cart_url }}" aria-label="{{ 'a11y.open_cart' | t }}">
-      {{ 'header.cart' | t }}
-    </a>
+
+      <!-- Mini Cart Bubble -->
+      <a href="{{ routes.cart_url }}" class="cart-link" aria-label="{{ 'a11y.open_cart' | t }}">
+        {{ 'header.cart' | t }}
+        <span id="cart-icon-bubble" class="cart-bubble">
+          {{ cart.item_count }}
+        </span>
+      </a>
   </div>
 </header>
