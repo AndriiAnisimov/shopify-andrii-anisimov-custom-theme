@@ -1,0 +1,44 @@
+{
+  "a11y": {
+    "footer_nav": "Footer navigation",
+    "open_cart": "Open cart",
+    "rating": "Product rating"
+  },
+  "buttons": {
+    "add_to_cart": "Add to cart",
+    "buy_now": "Buy now",
+    "view_all": "View all"
+  },
+  "footer": {
+    "copyright": "All rights reserved",
+    "login": "Log in",
+    "search": "Search the site"
+  },
+  "header": {
+    "cart": "Cart",
+    "products": "Products",
+    "search": "Search"
+  },
+  "messages": {
+    "error": "An error occurred. Please try again.",
+    "loading": "Loading..."
+  },
+  "navigation": {
+    "contact": "Contact",
+    "home": "Home",
+    "shop": "Shop"
+  },
+  "products": {
+    "sort_by": "Sort by"
+  },
+  "sort": {
+    "best_selling": "Best selling",
+    "price_high": "Price (high to low)",
+    "price_low": "Price (low to high)",
+    "title_asc": "Title (A–Z)"
+  },
+  "teaser": {
+    "empty": "No products yet — check back later!",
+    "title": "Featured products"
+  }
+}

@@ -1,0 +1,154 @@
+{% comment %}
+  Featured Products Section with Sorting and Add to Cart
+  Uses Section Rendering API and Fetch
+{% endcomment %}
+
+<section id="featured-products-{{ section.id }}" class="featured-products-section">
+    <div class="container">
+        {% if section.settings.title != blank %}
+            <h2>{{ section.settings.title }}</h2>
+        {% endif %}
+
+        <!-- Sorting Dropdown -->
+        <div class="sort-controls">
+            <label for="sort-select">{{ 'products.sort_by' | t }}</label>
+            <select id="sort-select" data-section-id="{{ section.id }}">
+                <option value="best-selling">{{ 'sort.best_selling' | t }}</option>
+                <option value="price-ascending">{{ 'sort.price_low' | t }}</option>
+                <option value="price-descending">{{ 'sort.price_high' | t }}</option>
+                <option value="title-ascending">{{ 'sort.title_asc' | t }}</option>
+            </select>
+        </div>
+
+        <div class="products-grid">
+            {%- assign collection = collections[section.settings.collection] -%}
+            {%- if collection != blank and collection.products_count > 0 -%}
+                {%- assign sorted_products = collection.products -%}
+                {%- for product in sorted_products limit: section.settings.products_count -%}
+                    <div class="product-card">
+                        <a href="{{ product.url }}" class="product-card__image">
+                            {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title }}
+                        </a>
+                        <h3 class="product-card__title">{{ product.title }}</h3>
+
+                        {% if section.settings.show_price %}
+                            <p class="product-card__price">{{ product.price | money }}</p>
+                        {% endif %}
+
+                        {% if section.settings.show_rating %}
+                            <div class="product-card__rating" aria-label="{{ 'a11y.rating' | t }}">
+                                ⭐⭐⭐⭐☆
+                            </div>
+                        {% endif %}
+
+                        {% if section.settings.show_add_to_cart %}
+                            <button class="add-to-cart-btn" data-product-id="{{ product.id }}">
+                                {{ 'buttons.add_to_cart' | t }}
+                            </button>
+                        {% endif %}
+                    </div>
+                {%- endfor -%}
+            {%- else -%}
+                <p>{{ 'teaser.empty' | t }}</p>
+            {%- endif -%}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Заголовок",
+      "default": "Обрані товари"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Колекція"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Кількість товарів",
+      "min": 2,
+      "max": 12,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Показувати ціну",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Показувати рейтинг",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Кнопка 'Додати в кошик'",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Обрані товари"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const section = document.querySelector("#featured-products-{{ section.id }}");
+        const sortSelect = section.querySelector("#sort-select");
+
+        // Handle sorting
+        sortSelect.addEventListener("change", (event) => {
+            const sortValue = event.target.value;
+            const sectionId = event.target.dataset.sectionId;
+
+            const url = `${window.location.pathname}?section_id=${sectionId}&sort_by=${sortValue}`;
+
+            fetch(url)
+                .then(res => res.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newSection = doc.querySelector(`#featured-products-${sectionId}`);
+                    section.replaceWith(newSection);
+                });
+        });
+
+        // Handle Add to Cart
+        section.addEventListener("click", (e) => {
+            if (!e.target.classList.contains("add-to-cart-btn")) return;
+
+            const productId = e.target.dataset.productId;
+            fetch("/cart/add.js", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ items: [{ id: productId, quantity: 1 }] })
+            })
+                .then(res => res.json())
+                .then(() => {
+                    // Update mini cart section via Section Rendering API
+                    fetch("?section_id=cart-icon-bubble")
+                        .then(res => res.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const newCart = doc.querySelector("#cart-icon-bubble");
+                            document.querySelector("#cart-icon-bubble").replaceWith(newCart);
+                        });
+                });
+        });
+    });
+</script>
