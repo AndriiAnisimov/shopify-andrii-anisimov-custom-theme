@@ -3,20 +3,20 @@
   Uses Section Rendering API and Fetch
 {% endcomment %}
 
-<section id="featured-products-{{ section.id }}" class="featured-products-section">
+<section class="featured-products-section" data-section-id="{{ section.id }}">
     <div class="container">
         {% if section.settings.title != blank %}
             <h2>{{ section.settings.title }}</h2>
         {% endif %}
 
         <!-- Sorting Dropdown -->
-        <div class="sort-controls">
-            <label for="sort-select">{{ 'products.sort_by' | t }}</label>
-            <select id="sort-select" data-section-id="{{ section.id }}">
-                <option value="best-selling">{{ 'sort.best_selling' | t }}</option>
-                <option value="price-ascending">{{ 'sort.price_low' | t }}</option>
-                <option value="price-descending">{{ 'sort.price_high' | t }}</option>
-                <option value="title-ascending">{{ 'sort.title_asc' | t }}</option>
+        <div class="featured-products__sort">
+            <label for="sort-by">{{ 'products.sort_by' | t | default: 'Сортувати:' }}</label>
+            <select id="sort-by" name="sort_by">
+                <option value="best-selling">Популярні</option>
+                <option value="price-ascending">Ціна: від низької до високої</option>
+                <option value="price-descending">Ціна: від високої до низької</option>
+                <option value="title-ascending">Назва: A–Z</option>
             </select>
         </div>
 
@@ -42,8 +42,12 @@
                         {% endif %}
 
                         {% if section.settings.show_add_to_cart %}
-                            <button class="add-to-cart-btn" data-product-id="{{ product.id }}">
-                                {{ 'buttons.add_to_cart' | t }}
+                            <button
+                                    class="product-card__add"
+                                    data-product-id="{{ product.id }}"
+                                    data-variant-id="{{ product.first_available_variant.id }}"
+                            >
+                                {{ 'products.product.add_to_cart' | t | default: 'Додати в кошик' }}
                             </button>
                         {% endif %}
                     </div>
@@ -106,73 +110,74 @@
 {% endschema %}
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const section = document.querySelector("#featured-products-{{ section.id }}");
-        const sortSelect = section.querySelector("#sort-select");
+    document.addEventListener('DOMContentLoaded', () => {
+        const section = document.querySelector('[data-section-id="{{ section.id }}"]');
+        const sortSelect = section.querySelector('#sort-by');
 
-        // Handle sorting
-        sortSelect.addEventListener("change", (event) => {
-            const sortValue = event.target.value;
-            const sectionId = event.target.dataset.sectionId;
+        // --- 1. Зміна сортування ---
+        sortSelect.addEventListener('change', async (e) => {
+            const sort = e.target.value;
+            const url = `${window.location.pathname}?section_id={{ section.id }}&sort_by=${sort}`;
 
-            const url = `${window.location.pathname}?section_id=${sectionId}&sort_by=${sortValue}`;
-
-            fetch(url)
-                .then(res => res.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newSection = doc.querySelector(`#featured-products-${sectionId}`);
-                    section.replaceWith(newSection);
-                });
+            try {
+                const res = await fetch(url);
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const newSection = doc.querySelector('[data-section-id="{{ section.id }}"]');
+                section.replaceWith(newSection);
+            } catch (err) {
+                console.error('Помилка сортування:', err);
+            }
         });
 
-        // Handle Add to Cart
-        section.addEventListener("click", (e) => {
-            if (!e.target.classList.contains("add-to-cart-btn")) return;
+        // --- 2. Add to Cart ---
+        document.body.addEventListener('click', async (e) => {
+            const btn = e.target.closest('.product-card__add');
+            if (!btn) return;
 
-            const productId = e.target.dataset.productId;
-            fetch("/cart/add.js", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ items: [{ id: productId, quantity: 1 }] })
-            })
-                .then(res => res.json())
-                .then(() => {
-                    // Update mini cart section via Section Rendering API
-                    fetch("?section_id=cart-icon-bubble")
-                        .then(res => res.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            const newCart = doc.querySelector("#cart-icon-bubble");
-                            document.querySelector("#cart-icon-bubble").replaceWith(newCart);
-                        });
+            e.preventDefault();
+            const variantId = btn.dataset.variantId;
+            btn.disabled = true;
+            btn.textContent = 'Додається...';
+
+            try {
+                // Додаємо товар
+                const res = await fetch('/cart/add.js', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: variantId, quantity: 1 })
                 });
+                if (!res.ok) throw new Error('Помилка додавання');
+
+                btn.textContent = 'Додано!';
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = 'Додати в кошик';
+                }, 1500);
+
+                await updateMiniCart();
+            } catch (err) {
+                console.error('Add to cart error:', err);
+                btn.textContent = 'Помилка';
+                btn.disabled = false;
+            }
         });
 
-        // Update mini cart
-        section.addEventListener("click", (e) => {
-            if (!e.target.classList.contains("add-to-cart-btn")) return;
+        // --- 3. Оновлення міні-кошика ---
+        async function updateMiniCart() {
+            try {
+                const res = await fetch('/?section_id=cart-drawer');
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const newCart = doc.querySelector('[data-section-id="cart-drawer"]');
+                const oldCart = document.querySelector('[data-section-id="cart-drawer"]');
 
-            const productId = e.target.dataset.productId;
-            fetch("/cart/add.js", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ items: [{ id: productId, quantity: 1 }] })
-            })
-                .then(res => res.json())
-                .then(() => {
-                    // Fetch updated mini-cart
-                    fetch("?section_id=cart-icon-bubble")
-                        .then(res => res.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            const newCart = doc.querySelector("#cart-icon-bubble");
-                            document.querySelector("#cart-icon-bubble").replaceWith(newCart);
-                        });
-                });
-        });
+                if (newCart && oldCart) {
+                    oldCart.replaceWith(newCart);
+                }
+            } catch (err) {
+                console.error('Mini cart update failed:', err);
+            }
+        }
     });
 </script>
