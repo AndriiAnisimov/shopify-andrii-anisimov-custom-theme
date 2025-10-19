@@ -1,0 +1,46 @@
+{% layout 'theme' %}
+
+<section class="cart-page container">
+    <h1>Ваш кошик</h1>
+
+    {% if cart.item_count > 0 %}
+        <form action="{{ routes.cart_url }}" method="post" novalidate>
+            <table class="cart-table">
+                <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Кількість</th>
+                    <th>Ціна</th>
+                    <th>Разом</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart.items %}
+                    <tr>
+                        <td>
+                            <a href="{{ item.url }}">
+                                <img src="{{ item.image | img_url: '100x100' }}" alt="{{ item.title }}">
+                                {{ item.title }}
+                            </a>
+                        </td>
+                        <td>
+                            <input type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+                        </td>
+                        <td>{{ item.final_price | money }}</td>
+                        <td>{{ item.final_line_price | money }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="cart-footer">
+                <p><strong>Всього:</strong> {{ cart.total_price | money }}</p>
+                <button type="submit" name="update" class="btn">Оновити кошик</button>
+                <button type="submit" name="checkout" class="btn btn--primary">Перейти до оплати</button>
+            </div>
+        </form>
+    {% else %}
+        <p>Ваш кошик порожній.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn">Перейти до каталогу</a>
+    {% endif %}
+</section>
