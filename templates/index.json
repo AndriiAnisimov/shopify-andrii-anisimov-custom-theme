@@ -1,56 +1,57 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
 {
   "sections": {
     "promo-banners": {
       "type": "promo-banners",
-      "settings": {
-        "title": "Наші пропозиції",
-        "subtitle": "<p>Обирайте найкраще з нашої колекції</p>",
-        "text_align": "center",
-        "padding": 60,
-        "color_scheme": "light"
-      },
       "blocks": {
-        "banner-1": {
+        "banner_w83ppx": {
           "type": "banner",
           "settings": {
-            "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&q=80",
-            "title": "Новинки сезону",
-            "button_text": "Детальніше",
-            "link": "/collections/new",
+            "title": "",
+            "button_text": "",
+            "link": "",
             "aspect_ratio": "16-9"
           }
         },
-        "banner-2": {
+        "banner_WkGYkE": {
           "type": "banner",
           "settings": {
-            "image": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=1200&q=80",
-            "title": "Топ продажів",
-            "button_text": "Переглянути",
-            "link": "/collections/best-sellers",
-            "aspect_ratio": "1-1"
+            "title": "",
+            "button_text": "",
+            "link": "",
+            "aspect_ratio": "16-9"
           }
         },
-        "banner-3": {
+        "banner_9EnLg7": {
           "type": "banner",
           "settings": {
-            "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1200&q=80",
-            "title": "Акційні товари",
-            "button_text": "Купити зі знижкою",
-            "link": "/collections/sale",
-            "aspect_ratio": "3-2"
+            "title": "",
+            "button_text": "",
+            "link": "",
+            "aspect_ratio": "16-9"
           }
         }
       },
       "block_order": [
-        "banner-1",
-        "banner-2",
-        "banner-3"
-      ]
+        "banner_w83ppx",
+        "banner_WkGYkE",
+        "banner_9EnLg7"
+      ],
+      "settings": {
+        "title": "Наші пропозиції",
+        "subtitle": "<p>Виберіть найкраще для себе</p>",
+        "text_align": "center",
+        "padding": 40,
+        "color_scheme": "light"
+      }
     },
     "featured-products": {
       "type": "featured-products",
