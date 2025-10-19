@@ -45,9 +45,9 @@
                             <button
                                     class="product-card__add"
                                     data-product-id="{{ product.id }}"
-                                    data-variant-id="{{ product.first_available_variant.id }}"
+                                    data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                             >
-                                {{ 'products.product.add_to_cart' | t | default: 'Додати в кошик' }}
+                                {{ 'Додати в кошик' }}
                             </button>
                         {% endif %}
                     </div>
