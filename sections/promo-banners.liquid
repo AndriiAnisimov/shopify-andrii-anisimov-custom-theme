@@ -17,27 +17,20 @@
 
         <div class="promo-banners__grid">
             {% for block in section.blocks %}
-                {% if block.type == 'banner' %}
-                    <div class="promo-banners__item promo-banners__ratio--{{ block.settings.aspect_ratio }}">
-                        {% if block.settings.image != blank %}
-                            <img
-                                    src="{{ block.settings.image | image_url: width: 800 }}"
-                                    alt="{{ block.settings.title | escape }}"
-                                    class="promo-banners__image"
-                            >
-                        {% endif %}
-
-                        {% if block.settings.title != blank %}
-                            <h3 class="promo-banners__item-title">{{ block.settings.title }}</h3>
-                        {% endif %}
-
-                        {% if block.settings.button_text != blank and block.settings.link != blank %}
-                            <a href="{{ block.settings.link }}" class="promo-banners__button">
-                                {{ block.settings.button_text }}
-                            </a>
-                        {% endif %}
-                    </div>
-                {% endif %}
+                <div class="promo-banners__item" {{ block.shopify_attributes }}>
+                    {% if block.settings.image != blank %}
+                        <img
+                                src="{{ block.settings.image | image_url: width: 800 }}"
+                                alt="{{ block.settings.title | escape }}"
+                                loading="lazy">
+                    {% endif %}
+                    {% if block.settings.title != blank %}
+                        <h3>{{ block.settings.title }}</h3>
+                    {% endif %}
+                    {% if block.settings.button_text != blank and block.settings.link != blank %}
+                        <a href="{{ block.settings.link }}" class="btn">{{ block.settings.button_text }}</a>
+                    {% endif %}
+                </div>
             {% endfor %}
         </div>
     </div>
