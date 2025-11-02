@@ -66,10 +66,17 @@
         "show_rating": true,
         "show_add_to_cart": true
       }
+    },
+    "designers-list": {
+      "type": "designers-list",
+      "settings": {
+        "title": "Our Designers"
+      }
     }
   },
   "order": [
     "promo-banners",
-    "featured-products"
+    "featured-products",
+    "designers-list"
   ]
 }
