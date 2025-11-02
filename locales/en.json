@@ -40,5 +40,25 @@
   "teaser": {
     "empty": "No products yet — check back later!",
     "title": "Featured products"
+  },
+  "forms": {
+    "contact_heading": "Contact Form",
+    "product_inquiry_heading": "Product Inquiry",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "submit": "Submit",
+    "success_message": "Thank you! Your message has been successfully sent.",
+    "honeypot_label": "Do not fill out this field",
+    "general_errors": "Please check the form for errors.",
+    "property_reason": "Reason for Inquiry",
+    "property_contact": "Preferred Contact Method",
+    "contact_email": "Email",
+    "contact_phone": "Phone",
+    "add_to_cart": "Add to Cart",
+    "sold_out": "Sold Out",
+    "variant_unavailable": "Variant unavailable",
+    "quantity": "Quantity"
   }
 }
