@@ -11,10 +11,8 @@ Includes variant.id, custom properties, accessibility, honeypot, translation.
             <div class="form-errors" role="alert" aria-live="assertive">
                 <p>{{ 'forms.general_errors' | t }}</p>
                 <ul>
-                    {% for field, messages in form.errors %}
-                        {% for message in messages %}
-                            <li><a href="#{{ field }}">{{ message }}</a></li>
-                        {% endfor %}
+                    {% for error in form.errors %}
+                        <li>{{ error }}</li>
                     {% endfor %}
                 </ul>
             </div>

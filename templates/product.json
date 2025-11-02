@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "inquiry": {
+      "type": "product-inquiry-form",
+      "settings": {}
+    }
+  },
+  "order": ["inquiry"]
+}

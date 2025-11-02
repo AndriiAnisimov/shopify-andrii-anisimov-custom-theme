@@ -1,9 +1,5 @@
 {
   "sections": {
-    "main-collection": {
-      "type": "main-collection-product-grid",
-      "settings": {}
-    },
     "designers-list": {
       "type": "designers-list",
       "settings": {
@@ -12,7 +8,6 @@
     }
   },
   "order": [
-    "main-collection",
     "designers-list"
   ]
 }
