@@ -1,0 +1,79 @@
+{% comment %}
+Contact Form Section
+Accessible, translatable, honeypot, ARIA support.
+{% endcomment %}
+
+<section class="contact-form-section" aria-labelledby="contact-form-heading">
+    <h2 id="contact-form-heading">{{ 'forms.contact_heading' | t }}</h2>
+
+    {% form 'contact', contact_form %}
+        {% if form.errors %}
+            <div class="form-errors" role="alert" aria-live="assertive">
+                <p>{{ 'forms.general_errors' | t }}</p>
+                <ul>
+                    {% for field, messages in form.errors %}
+                        {% for message in messages %}
+                            <li><a href="#{{ field }}">{{ message }}</a></li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- Honeypot -->
+        <div style="display:none;">
+            <label for="hp">{{ 'forms.honeypot_label' | t }}</label>
+            <input type="text" id="hp" name="contact[honeypot]" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div>
+            <label for="contact_name">{{ 'forms.name' | t }}</label>
+            <input id="contact_name" type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name">
+        </div>
+
+        <div>
+            <label for="contact_email">{{ 'forms.email' | t }} *</label>
+            <input id="contact_email" type="email" name="contact[email]" value="{{ form.email }}" required
+                   aria-invalid="{{ form.errors.email | default: false }}" aria-describedby="contact_email_error">
+            {% if form.errors.email %}
+                <span id="contact_email_error" class="error">{{ form.errors.email | first }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="contact_phone">{{ 'forms.phone' | t }}</label>
+            <input id="contact_phone" type="tel" name="contact[phone]" value="{{ form.phone }}" autocomplete="tel">
+        </div>
+
+        <div>
+            <label for="contact_message">{{ 'forms.message' | t }} *</label>
+            <textarea id="contact_message" name="contact[body]" required
+                      aria-invalid="{{ form.errors.body | default: false }}" aria-describedby="contact_message_error">{{ form.body }}</textarea>
+            {% if form.errors.body %}
+                <span id="contact_message_error" class="error">{{ form.errors.body | first }}</span>
+            {% endif %}
+        </div>
+
+        <div role="status" aria-live="polite">
+            {% if form.posted_successfully? %}
+                <p>{{ 'forms.success_message' | t }}</p>
+            {% endif %}
+        </div>
+
+        <button type="submit" {% if form.submitting %}disabled aria-busy="true"{% endif %}>
+            {{ 'forms.submit' | t }}
+        </button>
+    {% endform %}
+</section>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Contact Form"
+    }
+  ]
+}
+{% endschema %}
