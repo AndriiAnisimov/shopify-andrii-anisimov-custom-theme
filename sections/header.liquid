@@ -1,14 +1,20 @@
-<header class="header" role="banner">
-  <div class="container">
-    {% render 'logo' %}
-    {% render 'nav-main' %}
+<header class="bg-neutral-900 text-white py-4 px-8 flex justify-between items-center" role="banner">
+    <div class="flex items-center w-full max-w-7xl mx-auto">
+        {% render 'logo' %}
+        {% render 'nav-main' %}
 
-      <!-- Mini Cart Bubble -->
-      <a href="{{ routes.cart_url }}" class="cart-link" aria-label="{{ 'a11y.open_cart' | t }}">
-        {{ 'header.cart' | t }}
-        <span id="cart-icon-bubble" class="cart-bubble">
-          {% render 'mini-cart-count' %}
-        </span>
-      </a>
-  </div>
+        <a
+                href="{{ routes.cart_url }}"
+                class="relative ml-auto flex items-center gap-2 hover:underline"
+                aria-label="{{ 'a11y.open_cart' | t }}"
+        >
+            {{ 'header.cart' | t }}
+            <span
+                    id="cart-icon-bubble"
+                    class="absolute -top-2 -right-3 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"
+            >
+        {% render 'mini-cart-count' %}
+      </span>
+        </a>
+    </div>
 </header>
