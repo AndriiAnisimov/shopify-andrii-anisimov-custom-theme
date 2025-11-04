@@ -200,12 +200,3 @@ main h1 {
     margin-top: 10px;
     padding: 6px 10px;
 }
-
-/* ====== Footer ====== */
-.footer {
-    background: #111;
-    color: #ccc;
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-}

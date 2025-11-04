@@ -1,10 +1,21 @@
-<footer class="footer" role="contentinfo">
-  <div class="container">
-    <nav aria-label="{{ 'a11y.footer_nav' | t }}">
-      <a href="{{ routes.account_login_url }}">{{ 'footer.login' | t }}</a>
-      <a href="{{ routes.search_url }}">{{ 'footer.search' | t }}</a>
-    </nav>
-    <small>&copy; {{ 'footer.copyright' | t: default: 'Всі права захищено' }}
-      {{ shop.name | escape }}</small>
-  </div>
+<footer class="bg-neutral-900 text-neutral-400 text-center py-6 text-sm" role="contentinfo">
+    <div class="container mx-auto px-4">
+        <nav
+                class="flex flex-col items-center gap-2 mb-3
+             sm:flex-row sm:justify-center sm:gap-6"
+                aria-label="{{ 'a11y.footer_nav' | t }}"
+        >
+            <a href="{{ routes.account_login_url }}" class="hover:text-white transition-colors">
+                {{ 'footer.login' | t }}
+            </a>
+            <a href="{{ routes.search_url }}" class="hover:text-white transition-colors">
+                {{ 'footer.search' | t }}
+            </a>
+        </nav>
+
+        <small class="block text-neutral-500">
+            &copy; {{ 'footer.copyright' | t: default: 'Всі права захищено' }}
+            {{ shop.name | escape }}
+        </small>
+    </div>
 </footer>
