@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "promo-banners": {
@@ -57,10 +66,16 @@
         "show_rating": true,
         "show_add_to_cart": true
       }
+    },
+    "contact_form_RfK7nd": {
+      "type": "contact-form",
+      "name": "Contact Form",
+      "settings": {}
     }
   },
   "order": [
     "promo-banners",
-    "featured-products"
+    "featured-products",
+    "contact_form_RfK7nd"
   ]
 }
