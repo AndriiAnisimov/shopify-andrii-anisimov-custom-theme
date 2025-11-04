@@ -8,10 +8,7 @@ export default defineConfig({
             input: './src/scripts/main.js',
             output: {
                 entryFileNames: 'main.js',
-                assetFileNames: (assetInfo) => {
-                    if (assetInfo.name === 'tailwind.css') return 'tailwind.css';
-                    return '[name].[ext]';
-                },
+                assetFileNames: '[name].[ext]',
             },
         },
     },
