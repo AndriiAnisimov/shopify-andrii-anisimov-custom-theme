@@ -56,6 +56,13 @@
         "color_scheme": "light"
       }
     },
+    "designers_list_4rNBBW": {
+      "type": "designers-list",
+      "name": "Designers list",
+      "settings": {
+        "collection": "designers"
+      }
+    },
     "featured-products": {
       "type": "featured-products",
       "settings": {
@@ -70,11 +77,6 @@
     "contact_form_RfK7nd": {
       "type": "contact-form",
       "name": "Contact Form",
-      "settings": {}
-    },
-    "designers_list_4rNBBW": {
-      "type": "designers-list",
-      "name": "Designers list",
       "settings": {}
     }
   },
