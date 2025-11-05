@@ -3,16 +3,23 @@
   Uses Section Rendering API and Fetch
 {% endcomment %}
 
-<section class="featured-products-section" data-section-id="{{ section.id }}">
-    <div class="container">
+<section class="featured-products-section py-10 md:py-16" data-section-id="{{ section.id }}">
+    <div class="container mx-auto px-4">
         {% if section.settings.title != blank %}
-            <h2>{{ section.settings.title }}</h2>
+            <h2 class="text-2xl md:text-3xl font-semibold mb-6 md:mb-8 text-center text-gray-900">
+                {{ section.settings.title }}
+            </h2>
         {% endif %}
 
-        <!-- Sorting Dropdown -->
-        <div class="featured-products__sort">
-            <label for="sort-by">{{ 'products.sort_by' | t | default: 'Сортувати:' }}</label>
-            <select id="sort-by" name="sort_by">
+        <div class="featured-products__sort flex justify-end mb-5 md:mb-8 items-center gap-2">
+            <label for="sort-by" class="text-sm md:text-base font-medium text-gray-700">
+                {{ 'products.sort_by' | t | default: 'Сортувати:' }}
+            </label>
+            <select
+                    id="sort-by"
+                    name="sort_by"
+                    class="border border-gray-300 rounded-md px-2 py-1 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-black bg-white"
+            >
                 <option value="best-selling">Популярні</option>
                 <option value="price-ascending">Ціна: від низької до високої</option>
                 <option value="price-descending">Ціна: від високої до низької</option>
@@ -20,30 +27,34 @@
             </select>
         </div>
 
-        <div class="products-grid">
+        <div class="products-grid grid gap-5 md:gap-6 grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
             {%- assign collection = collections[section.settings.collection] -%}
             {%- if collection != blank and collection.products_count > 0 -%}
                 {%- assign sorted_products = collection.products -%}
                 {%- for product in sorted_products limit: section.settings.products_count -%}
-                    <div class="product-card">
-                        <a href="{{ product.url }}" class="product-card__image">
-                            {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title }}
+                    <div class="product-card border border-gray-300 p-4 md:p-5 text-center rounded-lg hover:shadow-md transition-shadow duration-200">
+                        <a href="{{ product.url }}" class="product-card__image block mb-3 md:mb-4">
+                            {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title, class: "w-full h-auto object-cover rounded-md" }}
                         </a>
-                        <h3 class="product-card__title">{{ product.title }}</h3>
+                        <h3 class="product-card__title text-base md:text-lg font-medium mb-2 md:mb-3 text-gray-800">
+                            {{ product.title }}
+                        </h3>
 
                         {% if section.settings.show_price %}
-                            <p class="product-card__price">{{ product.price | money }}</p>
+                            <p class="product-card__price text-gray-900 font-semibold mb-2">
+                                {{ product.price | money }}
+                            </p>
                         {% endif %}
 
                         {% if section.settings.show_rating %}
-                            <div class="product-card__rating" aria-label="{{ 'a11y.rating' | t }}">
+                            <div class="product-card__rating text-yellow-500 text-sm mb-2" aria-label="{{ 'a11y.rating' | t }}">
                                 ⭐⭐⭐⭐☆
                             </div>
                         {% endif %}
 
                         {% if section.settings.show_add_to_cart %}
                             <button
-                                    class="product-card__add"
+                                    class="product-card__add bg-black text-white border-none px-3 py-2 md:px-4 md:py-2.5 cursor-pointer mt-2 hover:bg-gray-800 rounded-md transition-colors duration-200"
                                     data-product-id="{{ product.id }}"
                                     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                             >
@@ -53,7 +64,7 @@
                     </div>
                 {%- endfor -%}
             {%- else -%}
-                <p>{{ 'teaser.empty' | t }}</p>
+                <p class="text-center text-gray-500">{{ 'teaser.empty' | t }}</p>
             {%- endif -%}
         </div>
     </div>
@@ -114,7 +125,6 @@
         const section = document.querySelector('[data-section-id="{{ section.id }}"]');
         const sortSelect = section.querySelector('#sort-by');
 
-        // --- 1. Зміна сортування ---
         sortSelect.addEventListener('change', async (e) => {
             const sort = e.target.value;
             const url = `${window.location.pathname}?section_id={{ section.id }}&sort_by=${sort}`;
@@ -130,7 +140,6 @@
             }
         });
 
-        // --- 2. Add to Cart ---
         document.body.addEventListener('click', async (e) => {
             const btn = e.target.closest('.product-card__add');
             if (!btn) return;
@@ -141,7 +150,6 @@
             btn.textContent = 'Додається...';
 
             try {
-                // Додаємо товар
                 const res = await fetch('/cart/add.js', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -163,7 +171,6 @@
             }
         });
 
-        // --- 3. Оновлення міні-кошика ---
         async function updateMiniCart() {
             try {
                 const res = await fetch('/?section_id=cart-drawer');

@@ -1,45 +1,5 @@
 @import "tailwindcss";
 
-/* ====== Featured Products Section ====== */
-.featured-products-section {
-    padding: 40px 0;
-}
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}
-
-.product-card {
-    border: 1px solid #ddd;
-    padding: 15px;
-    text-align: center;
-}
-
-.product-card__image img {
-    width: 100%;
-    height: auto;
-}
-
-.product-card__add {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    margin-top: 8px;
-}
-
-.product-card__add:hover {
-    background: #333;
-}
-
-.sort-controls {
-    text-align: right;
-    margin-bottom: 20px;
-}
-
 /* ====== Promo Banners Section ====== */
 .promo-banners {
     width: 100%;
