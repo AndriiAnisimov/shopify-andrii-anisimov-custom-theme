@@ -3,29 +3,44 @@
 
     {% if target_collection and target_collection.metafields.custom.designers.value %}
         {% for designer in target_collection.metafields.custom.designers.value %}
-            <div class="bg-white rounded-xl shadow-md p-6 text-center">
-                <img
-                        src="{{ designer.photo | image_url: width: 200 }}"
-                        alt="{{ designer.name }}"
-                        class="mx-auto rounded-lg mb-4"
-                >
+            <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition">
+                {% if designer.photo %}
+                    <img
+                            src="{{ designer.photo | image_url: width: 200 }}"
+                            alt="{{ designer.name }}"
+                            class="mx-auto rounded-full mb-4 w-32 h-32 object-cover"
+                    >
+                {% endif %}
+
                 <h3 class="text-lg font-semibold text-gray-900">{{ designer.name }}</h3>
-                <p class="text-gray-600 mb-2">{{ designer.role }}</p>
-                <p class="text-gray-700 mb-4">{{ designer.bio }}</p>
 
-                <div class="flex flex-wrap justify-center gap-2 mb-4">
-                    {% for tag in designer.tags %}
-                        <span class="inline-block bg-gray-100 rounded-lg px-3 py-1 text-sm text-gray-700">{{ tag }}</span>
-                    {% endfor %}
-                </div>
+                {% if designer.role %}
+                    <p class="text-gray-600 mb-2">{{ designer.role }}</p>
+                {% endif %}
 
-                <div class="flex flex-col items-center space-y-1 mb-4">
-                    {% for link in designer.links %}
-                        <a href="{{ link }}" target="_blank" class="text-blue-600 hover:underline break-all text-sm">{{ link }}</a>
-                    {% endfor %}
-                </div>
+                {% if designer.bio %}
+                    <p class="text-gray-700 mb-4">{{ designer.bio }}</p>
+                {% endif %}
 
-                <p class="text-sm text-gray-500 mb-2">Date of birth: {{ designer.dob | date: "%B %d, %Y" }}</p>
+                {% if designer.tags %}
+                    <div class="flex flex-wrap justify-center gap-2 mb-4">
+                        {% for tag in designer.tags %}
+                            <span class="inline-block bg-gray-100 rounded-lg px-3 py-1 text-sm text-gray-700">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if designer.links %}
+                    <div class="flex flex-col items-center space-y-1 mb-4">
+                        {% for link in designer.links %}
+                            <a href="{{ link }}" target="_blank" class="text-blue-600 hover:underline break-all text-sm">{{ link }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if designer.dob %}
+                    <p class="text-sm text-gray-500 mb-2">Date of birth: {{ designer.dob | date: "%B %d, %Y" }}</p>
+                {% endif %}
 
                 {% if designer.verified %}
                     <div class="inline-block bg-green-50 text-green-700 rounded-lg px-3 py-1 text-sm font-medium mt-2">
