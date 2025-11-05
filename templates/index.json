@@ -73,17 +73,11 @@
         "show_rating": true,
         "show_add_to_cart": true
       }
-    },
-    "contact_form_RfK7nd": {
-      "type": "contact-form",
-      "name": "Contact Form",
-      "settings": {}
     }
   },
   "order": [
     "promo-banners",
     "designers_list_4rNBBW",
-    "featured-products",
-    "contact_form_RfK7nd"
+    "featured-products"
   ]
 }
