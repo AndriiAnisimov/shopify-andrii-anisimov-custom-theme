@@ -1,18 +1,16 @@
-{% schema %}
-{
-  "name": "Designers List",
-  "settings": [],
-  "presets": [{ "name": "Designers list" }]
-}
-{% endschema %}
-
 <div class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8">
-    {% if collection.metafields.custom.designers.value %}
-        {% for designer in collection.metafields.custom.designers.value %}
+    {% assign target_collection = collections[section.settings.collection] %}
+
+    {% if target_collection and target_collection.metafields.custom.designers.value %}
+        {% for designer in target_collection.metafields.custom.designers.value %}
             <div class="bg-white rounded-xl shadow-md p-6 text-center">
-                <img src="{{ designer.photo | image_url: width: 200 }}" alt="{{ designer.name }}" class="mx-auto rounded-lg mb-4">
+                <img
+                        src="{{ designer.photo | image_url: width: 200 }}"
+                        alt="{{ designer.name }}"
+                        class="mx-auto rounded-lg mb-4"
+                >
                 <h3 class="text-lg font-semibold text-gray-900">{{ designer.name }}</h3>
-                <p class="role text-gray-600 mb-2">{{ designer.role }}</p>
+                <p class="text-gray-600 mb-2">{{ designer.role }}</p>
                 <p class="text-gray-700 mb-4">{{ designer.bio }}</p>
 
                 <div class="flex flex-wrap justify-center gap-2 mb-4">
@@ -27,7 +25,7 @@
                     {% endfor %}
                 </div>
 
-                <p class="dob text-sm text-gray-500 mb-2">Date of birth: {{ designer.dob | date: "%B %d, %Y" }}</p>
+                <p class="text-sm text-gray-500 mb-2">Date of birth: {{ designer.dob | date: "%B %d, %Y" }}</p>
 
                 {% if designer.verified %}
                     <div class="inline-block bg-green-50 text-green-700 rounded-lg px-3 py-1 text-sm font-medium mt-2">
@@ -40,3 +38,21 @@
         <p class="text-gray-600 text-center">No designers linked to this collection.</p>
     {% endif %}
 </div>
+
+{% schema %}
+{
+  "name": "Designers grid",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select collection with designers"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Designers grid"
+    }
+  ]
+}
+{% endschema %}
