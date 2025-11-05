@@ -1,23 +1,5 @@
 @import "tailwindcss";
 
-/* ====== Base layout ====== */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #fafafa;
-    color: #222;
-}
-
-/* ====== Main ====== */
-main {
-    padding: 2rem;
-}
-
-main h1 {
-    color: #333;
-}
-
 /* ====== Featured Products Section ====== */
 .featured-products-section {
     padding: 40px 0;

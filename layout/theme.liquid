@@ -1,22 +1,22 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ shop.name | escape }}</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ shop.name | escape }}</title>
 
-    {{ content_for_header }}
-    {{ 'main.css' | asset_url | stylesheet_tag }}
-  </head>
-  <body>
-    {% section 'header' %}
+        {{ content_for_header }}
+        {{ 'main.css' | asset_url | stylesheet_tag }}
+    </head>
+    <body class="font-sans m-0 p-0 bg-gray-50 text-gray-900">
+        {% section 'header' %}
 
-    <main id="main" role="main" aria-labelledby="page-title">
-      {{ content_for_layout }}
-    </main>
+        <main id="main" role="main" aria-labelledby="page-title" class="p-8">
+            {{ content_for_layout }}
+        </main>
 
-    {% section 'footer' %}
+        {% section 'footer' %}
 
-    {{ 'main.js' | asset_url | script_tag }}
-  </body>
+        {{ 'main.js' | asset_url | script_tag }}
+    </body>
 </html>
