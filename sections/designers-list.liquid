@@ -6,35 +6,37 @@
 }
 {% endschema %}
 
-<div class="designers-grid">
+<div class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8">
     {% if collection.metafields.custom.designers.value %}
         {% for designer in collection.metafields.custom.designers.value %}
-            <div class="designer-card">
-                <img src="{{ designer.photo | image_url: width: 200 }}" alt="{{ designer.name }}">
-                <h3>{{ designer.name }}</h3>
-                <p class="role">{{ designer.role }}</p>
-                <p>{{ designer.bio }}</p>
+            <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                <img src="{{ designer.photo | image_url: width: 200 }}" alt="{{ designer.name }}" class="mx-auto rounded-lg mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">{{ designer.name }}</h3>
+                <p class="role text-gray-600 mb-2">{{ designer.role }}</p>
+                <p class="text-gray-700 mb-4">{{ designer.bio }}</p>
 
-                <div class="tags">
+                <div class="flex flex-wrap justify-center gap-2 mb-4">
                     {% for tag in designer.tags %}
-                        <span class="tag">{{ tag }}</span>
+                        <span class="inline-block bg-gray-100 rounded-lg px-3 py-1 text-sm text-gray-700">{{ tag }}</span>
                     {% endfor %}
                 </div>
 
-                <div class="links">
+                <div class="flex flex-col items-center space-y-1 mb-4">
                     {% for link in designer.links %}
-                        <a href="{{ link }}" target="_blank">{{ link }}</a>
+                        <a href="{{ link }}" target="_blank" class="text-blue-600 hover:underline break-all text-sm">{{ link }}</a>
                     {% endfor %}
                 </div>
 
-                <p class="dob">Date of birth: {{ designer.dob | date: "%B %d, %Y" }}</p>
+                <p class="dob text-sm text-gray-500 mb-2">Date of birth: {{ designer.dob | date: "%B %d, %Y" }}</p>
 
                 {% if designer.verified %}
-                    <div class="verified">✔ Verified Designer</div>
+                    <div class="inline-block bg-green-50 text-green-700 rounded-lg px-3 py-1 text-sm font-medium mt-2">
+                        ✔ Verified Designer
+                    </div>
                 {% endif %}
             </div>
         {% endfor %}
     {% else %}
-        <p>No designers linked to this collection.</p>
+        <p class="text-gray-600 text-center">No designers linked to this collection.</p>
     {% endif %}
 </div>
