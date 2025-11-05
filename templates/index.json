@@ -71,10 +71,16 @@
       "type": "contact-form",
       "name": "Contact Form",
       "settings": {}
+    },
+    "designers_list_4rNBBW": {
+      "type": "designers-list",
+      "name": "Designers list",
+      "settings": {}
     }
   },
   "order": [
     "promo-banners",
+    "designers_list_4rNBBW",
     "featured-products",
     "contact_form_RfK7nd"
   ]
