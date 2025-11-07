@@ -3,14 +3,16 @@ Product Inquiry / Add to Cart Form
 Includes variant.id, custom properties, accessibility, honeypot, translation.
 {% endcomment %}
 
-<section class="product-inquiry-form" aria-labelledby="product-inquiry-heading">
-    <h2 id="product-inquiry-heading">{{ 'forms.product_inquiry_heading' | t }}</h2>
+<section class="product-inquiry-form max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-md space-y-6" aria-labelledby="product-inquiry-heading">
+    <h2 id="product-inquiry-heading" class="text-2xl font-semibold text-gray-800 text-center">
+        {{ 'forms.product_inquiry_heading' | t }}
+    </h2>
 
     {% form 'product', product %}
         {% if form.errors %}
-            <div class="form-errors" role="alert" aria-live="assertive">
-                <p>{{ 'forms.general_errors' | t }}</p>
-                <ul>
+            <div class="form-errors bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg" role="alert" aria-live="assertive">
+                <p class="font-medium mb-2">{{ 'forms.general_errors' | t }}</p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
                     {% for error in form.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
@@ -18,47 +20,52 @@ Includes variant.id, custom properties, accessibility, honeypot, translation.
             </div>
         {% endif %}
 
-        <!-- Honeypot -->
         <div style="display:none;">
-            <label for="hp">{{ 'forms.honeypot_label' | t }}</label>
+            <label for="hp" class="sr-only">{{ 'forms.honeypot_label' | t }}</label>
             <input type="text" id="hp" name="contact[honeypot]" tabindex="-1" autocomplete="off">
         </div>
 
-        <!-- Variant ID -->
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-        <!-- Quantity -->
-        <div>
-            <label for="quantity">{{ 'forms.quantity' | t }}</label>
-            <input id="quantity" type="number" name="quantity" value="1" min="1">
+        <div class="flex flex-col space-y-2">
+            <label for="quantity" class="text-sm font-medium text-gray-700">{{ 'forms.quantity' | t }}</label>
+            <input id="quantity" type="number" name="quantity" value="1" min="1"
+                   class="border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-        <!-- Custom properties -->
-        <div>
-            <label for="property_reason">{{ 'forms.property_reason' | t }}</label>
-            <input id="property_reason" type="text" name="properties[Reason]">
+        <div class="flex flex-col space-y-2">
+            <label for="property_reason" class="text-sm font-medium text-gray-700">{{ 'forms.property_reason' | t }}</label>
+            <input id="property_reason" type="text" name="properties[Reason]"
+                   class="border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
         </div>
 
-        <div>
-            <label for="property_contact">{{ 'forms.property_contact' | t }}</label>
-            <select id="property_contact" name="properties[Preferred contact]">
+        <div class="flex flex-col space-y-2">
+            <label for="property_contact" class="text-sm font-medium text-gray-700">{{ 'forms.property_contact' | t }}</label>
+            <select id="property_contact" name="properties[Preferred contact]"
+                    class="border border-gray-300 rounded-lg p-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 <option value="email">{{ 'forms.contact_email' | t }}</option>
                 <option value="phone">{{ 'forms.contact_phone' | t }}</option>
             </select>
         </div>
 
         {% if product.selected_or_first_available_variant.available %}
-            <button type="submit" {% if form.submitting %}disabled aria-busy="true"{% endif %}>
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    {% if form.submitting %}disabled aria-busy="true"{% endif %}>
                 {{ 'forms.add_to_cart' | t }}
             </button>
         {% else %}
-            <button type="button" disabled>{{ 'forms.sold_out' | t }}</button>
-            <p>{{ 'forms.variant_unavailable' | t }}</p>
+            <button type="button"
+                    class="w-full bg-gray-300 text-gray-600 font-medium py-2.5 px-4 rounded-lg cursor-not-allowed"
+                    disabled>
+                {{ 'forms.sold_out' | t }}
+            </button>
+            <p class="text-sm text-gray-500 text-center">{{ 'forms.variant_unavailable' | t }}</p>
         {% endif %}
 
         <div role="status" aria-live="polite">
             {% if form.posted_successfully? %}
-                <p>{{ 'forms.success_message' | t }}</p>
+                <p class="text-green-600 font-medium">{{ 'forms.success_message' | t }}</p>
             {% endif %}
         </div>
     {% endform %}
