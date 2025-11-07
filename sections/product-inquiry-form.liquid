@@ -8,6 +8,20 @@ Includes variant.id, custom properties, accessibility, honeypot, translation.
         {{ 'forms.product_inquiry_heading' | t }}
     </h2>
 
+    <div class="flex items-center gap-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+        {% if product.featured_image %}
+            <img src="{{ product.featured_image | image_url: width: 100 }}" alt="{{ product.title }}" class="w-20 h-20 object-cover rounded-md">
+        {% endif %}
+        <div class="flex-1">
+            <p class="text-lg font-medium text-gray-900">{{ product.title }}</p>
+            {% if product.selected_or_first_available_variant.price %}
+                <p class="text-sm text-gray-600">
+                    {{ product.selected_or_first_available_variant.price | money }}
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
     {% form 'product', product %}
         {% if form.errors %}
             <div class="form-errors bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg" role="alert" aria-live="assertive">
