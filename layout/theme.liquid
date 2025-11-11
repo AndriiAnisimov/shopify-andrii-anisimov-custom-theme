@@ -17,6 +17,8 @@
 
         {% section 'footer' %}
 
-        {{ 'main.js' | asset_url | script_tag }}
+        <script>
+            console.log('JS test loaded — inline');
+        </script>
     </body>
 </html>
