@@ -24,9 +24,8 @@
     "search": "Search the site"
   },
   "header": {
-    "cart": "Cart",
-    "products": "Products",
-    "search": "Search"
+    "search": "Search",
+    "contact": "Contact"
   },
   "messages": {
     "error": "An error occurred. Please try again.",
